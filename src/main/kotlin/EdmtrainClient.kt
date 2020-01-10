@@ -1,4 +1,3 @@
-import com.sun.istack.internal.NotNull
 import exceptions.APIException
 import models.Event
 import models.Location
@@ -19,6 +18,14 @@ class EdmtrainClient(builder: Builder) {
 
     init {
         this.token = builder.token
+    }
+
+    fun queryForEvent() : EventQuery {
+        return EventQuery()
+    }
+    
+    fun queryForLocation() : LocationQuery {
+        return  LocationQuery()
     }
 
     class Builder {
@@ -42,45 +49,45 @@ class EdmtrainClient(builder: Builder) {
             formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         }
 
-        fun withEventName(@NotNull name: String): EventQuery {
+        fun withEventName(name: String): EventQuery {
             this.args["eventName"] = name
             return this
         }
 
-        fun withArtistIds(@NotNull artistIds: List<Int>): EventQuery {
+        fun withArtistIds(artistIds: List<Int>): EventQuery {
             val idStrings = artistIds.map { it.toString() }
             this.args["artistIds"] = idStrings.joinToString(",")
             return this
         }
 
-        fun withVenueIds(@NotNull venueIds: List<Int>): EventQuery {
+        fun withVenueIds(venueIds: List<Int>): EventQuery {
             val idStrings = venueIds.map { it.toString() }
             this.args["venueIds"] = idStrings.joinToString(",")
             return this
         }
 
-        fun withLocationIds(@NotNull locationIds: List<Int>): EventQuery {
+        fun withLocationIds(locationIds: List<Int>): EventQuery {
             val idStrings = locationIds.map { it.toString() }
             this.args["locationIds"] = idStrings.joinToString(",")
             return this
         }
 
-        fun withStartDate(@NotNull startDate: LocalDate): EventQuery {
+        fun withStartDate(startDate: LocalDate): EventQuery {
             this.args["startDate"] = startDate.format(formatter)
             return this
         }
 
-        fun withEndDate(@NotNull endDate: LocalDate): EventQuery {
+        fun withEndDate(endDate: LocalDate): EventQuery {
             this.args["endDate"] = endDate.format(formatter)
             return this
         }
 
-        fun withCreatedStartDate(@NotNull createdStartDate: LocalDate): EventQuery {
+        fun withCreatedStartDate(createdStartDate: LocalDate): EventQuery {
             this.args["createdStartDate"] = createdStartDate.format(formatter)
             return this
         }
 
-        fun withCreatedEndDate(@NotNull createdEndDate: LocalDate): EventQuery {
+        fun withCreatedEndDate(createdEndDate: LocalDate): EventQuery {
             this.args["createdEndDate"] = createdEndDate.format(formatter)
             return this
         }

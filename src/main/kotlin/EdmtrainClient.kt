@@ -23,7 +23,7 @@ class EdmtrainClient(builder: Builder) {
     fun queryForEvent() : EventQuery {
         return EventQuery()
     }
-    
+
     fun queryForLocation() : LocationQuery {
         return  LocationQuery()
     }
@@ -117,7 +117,11 @@ class EdmtrainClient(builder: Builder) {
                     val json = IOUtils.toString(response.entity.content)
                     val respJson = JSONObject(json)
 
-                    return ParseUtils.parseEventsFromResponse(respJson)
+                    try {
+                        return ParseUtils.parseEventsFromResponse(respJson)
+                    } catch (e : Exception) {
+                        throw APIException("Something went wrong parsing the result: " + e.message)
+                    }
                 }
             } catch (e: IOException) {
                 throw APIException("Something went wrong getting a connection to the api: " + e.message)
@@ -167,7 +171,7 @@ class EdmtrainClient(builder: Builder) {
         val baseUrl = "https://edmtrain.com/api/"
         val url = StringBuilder(baseUrl + "events?")
         for ((key, value) in args) {
-            url.append(key).append("=").append(value).append("&")
+            url.append(key).append("=").append(ParseUtils.cleanArg(value)).append("&")
         }
         return url.append("client=").append(token).toString()
     }

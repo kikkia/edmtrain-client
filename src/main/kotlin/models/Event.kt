@@ -19,9 +19,9 @@ import java.util.*
  */
 data class Event(val id: Int,
                  val link: String,
-                 val ticketLink: String,
-                 val name: String,
-                 val ages: String,
+                 val ticketLink: String?,
+                 val name: String?,
+                 val ages: String?,
                  val isFestival: Boolean,
                  val isElectronic: Boolean,
                  val isOtherGenre: Boolean,

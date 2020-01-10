@@ -13,7 +13,7 @@ import kotlin.collections.ArrayList
 object ParseUtils {
 
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-    private val createdDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+    private val createdDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
 
     @JvmStatic
     fun parseEventsFromResponse(response: JSONObject) : List<Event> {
@@ -35,9 +35,9 @@ object ParseUtils {
         return Event(
                 jsonObject.getInt("id"),
                 jsonObject.getString("link"),
-                jsonObject.getString("ticketLink"),
-                jsonObject.getString("name"),
-                jsonObject.getString("ages"),
+                jsonObject.optString("ticketLink", null),
+                jsonObject.optString("name", null),
+                jsonObject.optString("ages", null),
                 jsonObject.getBoolean("festivalInd"),
                 jsonObject.getBoolean("electronicGenreInd"),
                 jsonObject.getBoolean("otherGenreInd"),
@@ -101,5 +101,9 @@ object ParseUtils {
                 json.getDouble("longitude"),
                 json.getString("link")
         )
+    }
+
+    fun cleanArg(arg : String) : String {
+        return arg.replace(" ", "%20")
     }
 }

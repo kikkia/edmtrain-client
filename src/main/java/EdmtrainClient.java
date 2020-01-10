@@ -1,7 +1,16 @@
 import com.sun.istack.internal.NotNull;
 import exceptions.APIException;
-import models.EventQueryResult;
+import models.Event;
+import models.Location;
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.json.JSONObject;
+import utils.ParseUtils;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -11,7 +20,6 @@ import java.util.stream.Collectors;
 
 public class EdmtrainClient {
 
-    private final String baseUrl = "https://edmtrain.com/api/";
     private final String token;
 
     public EdmtrainClient(Builder builder) {
@@ -38,7 +46,7 @@ public class EdmtrainClient {
         private DateTimeFormatter formatter;
 
         public EventQuery() {
-            args = new HashMap<String, String>();
+            args = new HashMap<>();
             formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         }
 
@@ -100,16 +108,60 @@ public class EdmtrainClient {
             return this;
         }
 
-        private String buildUrl(Map<String, String> args) {
-            StringBuilder url = new StringBuilder(baseUrl + "events?");
-            for (Map.Entry<String, String> e : args.entrySet()) {
-                url.append(e.getKey()).append("=").append(e.getValue()).append("&");
+        public List<Event> get() throws APIException {
+            String url = buildUrl(this.args);
+            try (CloseableHttpClient client = HttpClients.createDefault()) {
+                HttpGet get = new HttpGet(url);
+                HttpResponse response = client.execute(get);
+                String json = IOUtils.toString(response.getEntity().getContent());
+                JSONObject respJson = new JSONObject(json);
+
+                return ParseUtils.parseEventsFromResponse(respJson);
+            } catch (IOException e) {
+                throw new APIException("Something went wrong getting a connection to the api: " + e.getMessage());
             }
-            return url.append("client=").append(token).toString();
+        }
+    }
+
+    public class LocationQuery {
+        private Map<String, String> args;
+
+        public LocationQuery() {
+            args = new HashMap<>();
         }
 
-        public EventQueryResult get() throws APIException {
-
+        public LocationQuery withState(String state) {
+            args.put("state", state);
+            return this;
         }
+
+        public LocationQuery withCity(String city) {
+            args.put("city", city);
+            return this;
+        }
+
+        public List<Location> get() throws APIException {
+            String url = buildUrl(this.args);
+
+            try (CloseableHttpClient client = HttpClients.createDefault()) {
+                HttpGet get = new HttpGet(url);
+                HttpResponse response = client.execute(get);
+                String json = IOUtils.toString(response.getEntity().getContent());
+                JSONObject respJson = new JSONObject(json);
+
+                return ParseUtils.parseLocationsFromResponse(respJson);
+            } catch (IOException e) {
+                throw new APIException("Something went wrong getting a connection to the api: " + e.getMessage());
+            }
+        }
+    }
+
+    private String buildUrl(Map<String, String> args) {
+        String baseUrl = "https://edmtrain.com/api/";
+        StringBuilder url = new StringBuilder(baseUrl + "events?");
+        for (Map.Entry<String, String> e : args.entrySet()) {
+            url.append(e.getKey()).append("=").append(e.getValue()).append("&");
+        }
+        return url.append("client=").append(token).toString();
     }
 }

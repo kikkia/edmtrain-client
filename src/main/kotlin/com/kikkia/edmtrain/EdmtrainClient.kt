@@ -1,11 +1,13 @@
-import exceptions.APIException
-import models.Event
-import models.Location
+package com.kikkia.edmtrain
+
+import com.kikkia.edmtrain.exceptions.APIException
+import com.kikkia.edmtrain.models.Event
+import com.kikkia.edmtrain.models.Location
 import org.apache.commons.io.IOUtils
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.HttpClients
 import org.json.JSONObject
-import utils.ParseUtils
+import com.kikkia.edmtrain.utils.ParseUtils
 
 import java.io.IOException
 import java.time.LocalDate
@@ -40,6 +42,9 @@ class EdmtrainClient(builder: Builder) {
         }
     }
 
+    /**
+     * Allows the user to build and execute a query for events
+     */
     inner class EventQuery {
         private val args: MutableMap<String, String>
         private val formatter: DateTimeFormatter
@@ -107,6 +112,9 @@ class EdmtrainClient(builder: Builder) {
             return this
         }
 
+        /**
+         * Executes the query
+         */
         @Throws(APIException::class)
         fun get(): List<Event> {
             val url = buildUrl(this.args)
@@ -130,6 +138,9 @@ class EdmtrainClient(builder: Builder) {
         }
     }
 
+    /**
+     * Allows the consumer to build and execute a query for locations
+     */
     inner class LocationQuery {
         private val args: MutableMap<String, String>
 
@@ -147,6 +158,9 @@ class EdmtrainClient(builder: Builder) {
             return this
         }
 
+        /**
+         * Executes the query
+         */
         @Throws(APIException::class)
         fun get(): List<Location> {
             val url = buildUrl(this.args)

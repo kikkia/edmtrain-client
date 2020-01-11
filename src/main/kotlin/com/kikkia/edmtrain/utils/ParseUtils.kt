@@ -1,10 +1,10 @@
-package utils
+package com.kikkia.edmtrain.utils
 
-import exceptions.APIException
-import models.Artist
-import models.Event
-import models.Location
-import models.Venue
+import com.kikkia.edmtrain.exceptions.APIException
+import com.kikkia.edmtrain.models.Artist
+import com.kikkia.edmtrain.models.Event
+import com.kikkia.edmtrain.models.Location
+import com.kikkia.edmtrain.models.Venue
 import org.json.JSONArray
 import org.json.JSONObject
 import java.text.SimpleDateFormat
@@ -24,7 +24,7 @@ object ParseUtils {
         val data = response.getJSONArray("data")
 
         data.forEach {
-            events.add(ParseUtils.mapJsonToEvent(it as JSONObject))
+            events.add(mapJsonToEvent(it as JSONObject))
         }
 
         return events
@@ -85,7 +85,7 @@ object ParseUtils {
         val data = response.getJSONArray("data")
 
         data.forEach {
-            locations.add(ParseUtils.mapJsonToLocation(it as JSONObject))
+            locations.add(mapJsonToLocation(it as JSONObject))
         }
 
         return locations

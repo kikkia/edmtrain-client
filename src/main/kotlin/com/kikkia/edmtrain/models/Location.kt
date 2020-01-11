@@ -1,4 +1,4 @@
-package models
+package com.kikkia.edmtrain.models
 
 /**
  * Represents a location for events to occur in

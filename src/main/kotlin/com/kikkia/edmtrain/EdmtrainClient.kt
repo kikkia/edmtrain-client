@@ -22,10 +22,18 @@ class EdmtrainClient(builder: Builder) {
         this.token = builder.token
     }
 
+    /**
+     * Returns a new event query
+     * @return new event query
+     */
     fun queryForEvent() : EventQuery {
         return EventQuery()
     }
 
+    /**
+     * Returns a new event query
+     * @return new location query
+     */
     fun queryForLocation() : LocationQuery {
         return  LocationQuery()
     }
@@ -33,10 +41,18 @@ class EdmtrainClient(builder: Builder) {
     class Builder {
         internal var token: String? = null
 
+        /**
+         * Set the token of the client
+         * @param token string
+         */
         fun setToken(token: String) {
             this.token = token
         }
 
+        /**
+         * Builds and returns the client
+         * @return The new client
+         */
         fun build(): EdmtrainClient {
             return EdmtrainClient(this)
         }
@@ -56,6 +72,8 @@ class EdmtrainClient(builder: Builder) {
 
         /**
          * Limit the query with a given event name
+         * @param name the name to query with
+         * @return The query
          */
         fun withEventName(name: String): EventQuery {
             this.args["eventName"] = name
@@ -64,6 +82,8 @@ class EdmtrainClient(builder: Builder) {
 
         /**
          * Limit the query with a given list of artist Ids
+         * @param artistIds Ids to query for
+         * @return The query
          */
         fun withArtistIds(artistIds: List<Int>): EventQuery {
             val idStrings = artistIds.map { it.toString() }
@@ -73,6 +93,8 @@ class EdmtrainClient(builder: Builder) {
 
         /**
          * Limit the query with a given list of venue Ids
+         * @param venueIds the ids to query for
+         * @return The query
          */
         fun withVenueIds(venueIds: List<Int>): EventQuery {
             val idStrings = venueIds.map { it.toString() }
@@ -82,6 +104,8 @@ class EdmtrainClient(builder: Builder) {
 
         /**
          * Limit the query with a list of location Ids
+         * @param locationIds the locationIds to query with
+         * @return The query
          */
         fun withLocationIds(locationIds: List<Int>): EventQuery {
             val idStrings = locationIds.map { it.toString() }
@@ -91,6 +115,8 @@ class EdmtrainClient(builder: Builder) {
 
         /**
          * Limit the query to events occurring at or after this local date (only future events will be returned).
+         * @param startDate date to query with
+         * @return The query
          */
         fun withStartDate(startDate: LocalDate): EventQuery {
             this.args["startDate"] = startDate.format(formatter)
@@ -99,6 +125,8 @@ class EdmtrainClient(builder: Builder) {
 
         /**
          * Limit the query to events occurring at or before this local date.
+         * @param endDate the date to query with
+         * @return The query
          */
         fun withEndDate(endDate: LocalDate): EventQuery {
             this.args["endDate"] = endDate.format(formatter)
@@ -107,6 +135,8 @@ class EdmtrainClient(builder: Builder) {
 
         /**
          * Limit the query to events added to Edmtrain at or after this UTC date (only future events will be returned).
+         * @param createdStartDate the date to query with
+         * @return The query
          */
         fun withCreatedStartDate(createdStartDate: LocalDate): EventQuery {
             this.args["createdStartDate"] = createdStartDate.format(formatter)
@@ -115,6 +145,8 @@ class EdmtrainClient(builder: Builder) {
 
         /**
          * Limit the query to events added to Edmtrain at or before this UTC date (only future events will be returned).
+         * @param createdEndDate the date to query with
+         * @return The query
          */
         fun withCreatedEndDate(createdEndDate: LocalDate): EventQuery {
             this.args["createdEndDate"] = createdEndDate.format(formatter)
@@ -123,6 +155,8 @@ class EdmtrainClient(builder: Builder) {
 
         /**
          * Limit the query to events that are festivals (true) or not festivals (false) (default: both)
+         * @param isFestival the boolean to inlcude festivals or disclude
+         * @return The query
          */
         fun isFestival(isFestival: Boolean): EventQuery {
             this.args["festivalInd"] = isFestival.toString()
@@ -132,6 +166,8 @@ class EdmtrainClient(builder: Builder) {
 
         /**
          * Set to true to include electronic shows (default is true). Set to false to exclude electronic shows.
+         * @param includeElectronicGenre boolean to inlcude Electronic or disclude
+         * @return The query
          */
         fun includeElectronicGenre(includeElectronicGenre: Boolean): EventQuery {
             this.args["includeElectronicGenreInd"] = includeElectronicGenre.toString()
@@ -141,6 +177,8 @@ class EdmtrainClient(builder: Builder) {
 
         /**
          * Set to true to include non-electronic shows (default is false).
+         * @param includeOtherGenre boolean to inlcude other genres or disclude
+         * @return The query
          */
         fun includeOtherGenre(includeOtherGenre: Boolean): EventQuery {
             this.args["includeOtherGenreInd"] = includeOtherGenre.toString()
@@ -149,6 +187,8 @@ class EdmtrainClient(builder: Builder) {
 
         /**
          * Executes the query
+         * @return The list of events
+         * @throws APIException
          */
         @Throws(APIException::class)
         fun get(): List<Event> {
@@ -185,6 +225,8 @@ class EdmtrainClient(builder: Builder) {
 
         /**
          *  (optional unless city is supplied) – The state or province of the desired location.
+         *  @param state the state to query for
+         *  @return the query
          */
         fun withState(state: String): LocationQuery {
             args["state"] = state
@@ -193,6 +235,8 @@ class EdmtrainClient(builder: Builder) {
 
         /**
          *  (optional) – The city or town of the desired location.
+         *  @param city the city to query for
+         *  @return the query
          */
         fun withCity(city: String): LocationQuery {
             args["city"] = city
@@ -201,6 +245,8 @@ class EdmtrainClient(builder: Builder) {
 
         /**
          * Executes the query
+         * @return The queried locations
+         * @throws APIException
          */
         @Throws(APIException::class)
         fun get(): List<Location> {

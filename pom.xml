@@ -126,6 +126,9 @@
                 </configuration>
             </plugin>
         </plugins>
+        <testSourceDirectory>
+            ${project.basedir}/src/test/kotlin
+        </testSourceDirectory>
     </build>
 
 </project>

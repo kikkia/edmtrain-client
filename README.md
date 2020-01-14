@@ -1,3 +1,6 @@
+[![](https://jitci.com/gh/kikkia/edmtrain-client/svg)](https://jitci.com/gh/kikkia/edmtrain-client)
+
+
 # edmtrain-client
 A java/kotlin api client for the [Edmtrain api](https://edmtrain.com/developer-api.html). Please follow the [Edmtrain api terms of use](https://edmtrain.com/api-terms-of-use.html). 
 

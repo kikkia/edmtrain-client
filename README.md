@@ -1,4 +1,5 @@
 [![](https://jitci.com/gh/kikkia/edmtrain-client/svg)](https://jitci.com/gh/kikkia/edmtrain-client)
+[![](https://jitpack.io/v/kikkia/edmtrain-client.svg)](https://jitpack.io/#kikkia/edmtrain-client)
 
 
 # edmtrain-client

@@ -1,5 +1,4 @@
-[![](https://jitci.com/gh/kikkia/edmtrain-client/svg)](https://jitci.com/gh/kikkia/edmtrain-client)
-[![](https://jitpack.io/v/kikkia/edmtrain-client.svg)](https://jitpack.io/#kikkia/edmtrain-client)
+[![Build Status](https://travis-ci.org/kikkia/edmtrain-client.svg?branch=master)](https://travis-ci.org/kikkia/edmtrain-client)[![](https://jitpack.io/v/kikkia/edmtrain-client.svg)](https://jitpack.io/#kikkia/edmtrain-client)
 
 
 # edmtrain-client

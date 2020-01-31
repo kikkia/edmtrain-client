@@ -45,8 +45,9 @@ class EdmtrainClient(builder: Builder) {
          * Set the token of the client
          * @param token string
          */
-        fun setToken(token: String) {
+        fun setToken(token: String) : Builder {
             this.token = token
+            return this
         }
 
         /**

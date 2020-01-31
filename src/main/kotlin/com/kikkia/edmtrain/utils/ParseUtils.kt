@@ -94,12 +94,12 @@ object ParseUtils {
     private fun mapJsonToLocation(json : JSONObject) : Location {
         return Location(
                 json.getInt("id"),
-                json.getString("city"),
-                json.getString("state"),
-                json.getString("stateCode"),
+                json.optString("city", null),
+                json.optString("state", null),
+                json.optString("stateCode", null),
                 json.getDouble("latitude"),
                 json.getDouble("longitude"),
-                json.getString("link")
+                json.optString("link", null)
         )
     }
 

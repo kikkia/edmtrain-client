@@ -11,9 +11,9 @@ package com.kikkia.edmtrain.models
  * @property link Link to the edmtrain page for the location
  */
 data class Location(val id: Int,
-                    val city: String,
-                    val state: String,
-                    val stateCode: String,
+                    val city: String?,
+                    val state: String?,
+                    val stateCode: String?,
                     val latitude: Double,
                     val longitude: Double,
-                    val link: String)
+                    val link: String?)

@@ -193,7 +193,7 @@ class EdmtrainClient(builder: Builder) {
          */
         @Throws(APIException::class)
         fun get(): List<Event> {
-            val url = buildUrl(this.args)
+            val url = buildEventUrl(this.args)
             try {
                 HttpClients.createDefault().use { client ->
                     val get = HttpGet(url)
@@ -251,7 +251,7 @@ class EdmtrainClient(builder: Builder) {
          */
         @Throws(APIException::class)
         fun get(): List<Location> {
-            val url = buildUrl(this.args)
+            val url = buildLocationUrl(this.args)
 
             try {
                 HttpClients.createDefault().use { client ->
@@ -269,9 +269,18 @@ class EdmtrainClient(builder: Builder) {
         }
     }
 
-    private fun buildUrl(args: Map<String, String>): String {
+    private fun buildEventUrl(args: Map<String, String>): String {
         val baseUrl = "https://edmtrain.com/api/"
         val url = StringBuilder(baseUrl + "events?")
+        for ((key, value) in args) {
+            url.append(key).append("=").append(ParseUtils.cleanArg(value)).append("&")
+        }
+        return url.append("client=").append(token).toString()
+    }
+
+    private fun buildLocationUrl(args: Map<String, String>): String {
+        val baseUrl = "https://edmtrain.com/api/"
+        val url = StringBuilder(baseUrl + "locations?")
         for ((key, value) in args) {
             url.append(key).append("=").append(ParseUtils.cleanArg(value)).append("&")
         }

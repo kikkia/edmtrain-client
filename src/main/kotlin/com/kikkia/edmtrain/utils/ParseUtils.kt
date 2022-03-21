@@ -50,14 +50,24 @@ object ParseUtils {
 
 
     private fun mapJsonToVenue(json : JSONObject) : Venue {
-        return Venue(
+        if (json.getString("location") == "Virtual") {
+            // Virtuals are an edge case
+            return Venue(
                 json.getInt("id"),
                 json.getString("name"),
                 json.getString("location"),
-                json.getString("address"),
-                json.getString("state"),
-                json.getDouble("latitude"),
-                json.getDouble("longitude")
+                "Online", "Online", 0.0, 0.0
+            )
+        }
+
+        return Venue(
+            json.getInt("id"),
+            json.getString("name"),
+            json.getString("location"),
+            json.getString("address"),
+            json.optString("state", "None"),
+            json.getDouble("latitude"),
+            json.getDouble("longitude")
         )
     }
 

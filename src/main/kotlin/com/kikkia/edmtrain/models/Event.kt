@@ -28,4 +28,8 @@ data class Event(val id: Int,
                  val date: Date,
                  val created: Date,
                  val venue: Venue,
-                 val artists: List<Artist>)
+                 val artists: List<Artist>) {
+    fun isLiveStream() : Boolean {
+        return link.contains("/live-streams/")
+    }
+}

@@ -4,7 +4,7 @@
 # edmtrain-client
 A java/kotlin api client for the [Edmtrain api](https://edmtrain.com/developer-api.html). Please follow the [Edmtrain api terms of use](https://edmtrain.com/api-terms-of-use.html). 
 
-#### Currently under development. Wait for a v1.0 release before consumption.
+#### This was made for a side project I no longer use it. If changes to the api happen I may not catch them.
 
 ## Importing this library
 You need to make sure you have the jitpack repository added to your project.
